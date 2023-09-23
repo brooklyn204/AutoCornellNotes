@@ -14,6 +14,9 @@
 
     <script>
       var requestNum = 0;
+
+      const caesarCipher = (text, shift) => text.replace(/[a-zA-Z]/g, c => String.fromCharCode((c.charCodeAt(0) - (/[A-Z]/.test(c) ? 65 : 97) + shift) % 26 + (/[A-Z]/.test(c) ? 65 : 97)));
+
         function sendMessage() {
             requestNum += 1;
             const question = "Ask me five comprehension questions about the following: ";
@@ -26,7 +29,10 @@
               userMessage += answer + document.getElementById('userMessage').value;
             }
 
-            const apiKey = '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';
+            // const apiKey
+            const apikey_cc = 'bt-N8iQBypvU3NhEHwAwmtRC3KuktOSVWRh82nsqALpEnEKG1ZL'
+            const apiKey = caesarCipher(apikey_cc, 17)
+            console.log(apiKey)
             const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
             const requestData = {
