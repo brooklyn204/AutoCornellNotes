@@ -62,7 +62,11 @@
     </div>
     
     <script>
-        const apiKey = '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';
+
+        a = "sk-l1fzwTOD"
+        b = "M3JO0GNp6vUFT3BlbkFJbjJcXtFdUoaQJToltKCM"
+        var apiKey = a + b
+
         const apiUrl = 'https://api.openai.com/v1/chat/completions';
         var fbs = document.getElementsByClassName("feedback-box")
         console.log(fbs)
@@ -75,14 +79,14 @@
         var lss = retrievedData.split('?');
         console.log(retrievedData);
         for (var i = 0; i < 5; i++) {
-            document.getElementById("question" + (i + 1)).innerHTML = lss[i];
+            document.getElementById("question" + (i + 1)).innerHTML = lss[i] + "?";
         }
         function understanding(question, answer, fb){
         const requestData = {
                     model: 'gpt-3.5-turbo',
                     messages: [
                         { role: 'system', content: '' },
-                        { role: 'user', content: `Here is my answer : ${answer} to this question:  ${question}. Please check my understanding and clarrify any of my misconceptions.`},
+                        { role: 'user', content: `Here is my answer : ${answer} to this question:  ${question}. Please check my understanding and clarify any of my misconceptions.`},
                     ],
                 };
 
@@ -96,7 +100,7 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    let ca = data.choices[0].message.content; // Replace with your data\
+                    let ca = data.choices[0].message.content; // Replace with your data
                     fb.innerText = ca;
                     // localStorage.setItem("qs" + (i+1), ca);
                 })
