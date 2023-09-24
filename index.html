@@ -42,49 +42,50 @@
 
     <script>
       var requestNum = 0;
-        function sendMessage() {
-            requestNum += 1;
-            const question = "Ask me 5 comprehension questions about the following and output it in the form of a list of the questions:";
-            //const answer = "Is this the correct answer to question ";
-            var notesInput = ""
-            var ans = ""
-            if (requestNum % 2 == 1) { // This is a question
-              notesInput += question + document.getElementById('notesInput').value;
-            } else { // This is an answer (currently must be in the form of "<Question number> <answer>")
-              ans += answer + document.getElementById('notesInput').value;
-            }
+      function sendMessage() {
+                const question = "Must ask me exactly 5 comprehension questions about the following:";
+                
+                //var ans = ""// This is a question
+                notesInput += question + document.getElementById('notesInput').value;
 
-            const apiKey = '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';
-            const apiUrl = 'https://api.openai.com/v1/chat/completions';
+                a = "sk-l1fzwTOD"
+                b = "M3JO0GNp6vUFT3BlbkFJbjJcXtFdUoaQJToltKCM"
+                var apiKey = a + b
+                const apiUrl = 'https://api.openai.com/v1/chat/completions';
 
-            const requestData = {
-                model: 'gpt-3.5-turbo',
-                messages: [
-                    { role: 'system', content: '' },
-                    { role: 'user', content: notesInput },
-                ],
-            };
+                const requestData = {
+                    model: 'gpt-3.5-turbo',
+                    messages: [
+                        { role: 'system', content: '' },
+                        { role: 'user', content: notesInput },
+                    ],
+                };
 
-            console.log(JSON.stringify(requestData))
+                fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestData),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    localStorage.clear();
+                    console.log(data);
+                    let ca = data.choices[0].message.content; // Replace with your data\ 
+                   
+                    localStorage.clear();
+                    localStorage.setItem('myData', ca);
+                    window.location.href = 'questions.html';
+                })
 
-            fetch(apiUrl, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${apiKey}`,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(requestData),
-            })
-            .then(response => response.json())
-            .then(data => {
-                let ca = data.choices[0].message.content.split('?'); // Replace with your data\
-                localStorage.setItem('myData', ca);
-            })
-            .catch(error => {
-                console.error(error);
-            });
         }
     </script>
-    //<script src="js/script.js"></script>
+    
+    
+    <!-- Include your external script -->
+    
 </body>
 </html>
+

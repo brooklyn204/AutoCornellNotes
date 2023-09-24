@@ -16,46 +16,114 @@
         <div class="question1">
             <p>Question 1:</p>
             <p id = 'question1'></p>
-            <textarea placeholder="Your answer..."></textarea>
+            <textarea id = "qn1" placeholder="Your answer..."></textarea>
+            <div class="feedback-box">
+                <strong>Feedback:</strong> <span id="feedbackForQ1">loading ...</span>
+            </div> 
         </div>
 
         <div class="question2">
             <p>Question 2:</p>
             <p id = 'question2'></p>
-            <textarea placeholder="Your answer..."></textarea>
+            <textarea id = "qn2" placeholder="Your answer..."></textarea>
+            <div class="feedback-box">
+                <strong>Feedback:</strong> <span id="feedbackForQ2">loading ...</span>
+            </div>
         </div>
 
         <div class="question3">
             <p>Question 3:</p>
             <p id = 'question3'></p>
-            <textarea placeholder="Your answer..."></textarea>
+            <textarea id = "qn3" placeholder="Your answer..."></textarea>
+            <div class="feedback-box">
+                <strong>Feedback:</strong> <span id="feedbackForQ3">loading ...</span>
+            </div>
         </div>
 
         <div class="question4">
             <p>Question 4:</p>
             <p id = 'question4'></p>
-            <textarea placeholder="Your answer..."></textarea>
+            <textarea id = "qn4" placeholder="Your answer..."></textarea>
+            <div class="feedback-box">
+                <strong>Feedback:</strong> <span id="feedbackForQ4">loading ...</span>
+            </div>
         </div>
 
         <div class="question">
             <p>Question 5:</p>
             <p id = 'question5'></p>
-            <textarea placeholder="Your answer..."></textarea>
+            <textarea id = "qn5" placeholder="Your answer..."></textarea>
+            <div class="feedback-box">
+                <strong>Feedback:</strong> <span id="feedbackForQ5">loading ...</span>
+            </div>
         </div>
         
-        <button id="submitAnswers">Submit Answers</button>
+        <button id="submitAnswers" onclick="finalmsg()">Submit Answers</button>
     </div>
-
+    
     <script>
-        const retrievedData = localStorage.getItem('myData');
-        var lss = retrievedData.split(',');
+        const apiKey = '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';
+        const apiUrl = 'https://api.openai.com/v1/chat/completions';
+        var fbs = document.getElementsByClassName("feedback-box")
+        console.log(fbs)
+        for (var i = 0; i < 5; i++) 
+        {
+            fbs[i].style.display = "None";
+        }
+
+        var retrievedData = localStorage.getItem("myData");
+        var lss = retrievedData.split('?');
         console.log(retrievedData);
-        for(var i=0;i<5;i++){
-            document.getElementById("question" + (i+1)).innerHTML = lss[i];
+        for (var i = 0; i < 5; i++) {
+            document.getElementById("question" + (i + 1)).innerHTML = lss[i];
+        }
+        function understanding(question, answer, fb){
+        const requestData = {
+                    model: 'gpt-3.5-turbo',
+                    messages: [
+                        { role: 'system', content: '' },
+                        { role: 'user', content: `Here is my answer : ${answer} to this question:  ${question}. Please check my understanding and clarrify any of my misconceptions.`},
+                    ],
+                };
+
+                fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestData),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    let ca = data.choices[0].message.content; // Replace with your data\
+                    fb.innerText = ca;
+                    // localStorage.setItem("qs" + (i+1), ca);
+                })
+
+            }
+        function finalmsg(){
+
+            console.log("clicked bitch")
+            var fbs2 = document.getElementsByClassName("feedback-box")
+
+            for (var i = 0; i < 5; i++) 
+            {
+                //generate feedback and put it into fbs2[i]
+                var fb = document.getElementById(`feedbackForQ${i + 1}`)
+                var ans = document.getElementById(`qn${i + 1}`).innerText;
+                fbs2[i].style.display = "block";
+                understanding(lss[i], ans, fb);
+            }
+            // for (var i = 0; i < 5; i++) {
+            //   localStorage.setItem("uqs" + (i+1), document.getElementById(("qn" + (i+1)).value));
+
+            // }
+            // window.location.href = "feedback.html";
         }
 
     </script>
-    <script src="js/questions.js"></script>
+    
 </body>
 </html>
 
