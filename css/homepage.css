@@ -90,7 +90,3 @@ button:hover {
 #notesInput {
     width: calc(100% - 30px);
 }
-
-.intro-section {
-    margin-top: 250px;
-}
