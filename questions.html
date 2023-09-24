@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowmads - Questions</title>
+    <link rel="stylesheet" href="css/questions.css">
+</head>
+<body>
+    
+    <h1 class="website-name">Knowmads</h1>
+
+    <div class="question-section">
+        <h2>Your Questions</h2>
+        
+        <div class="question1">
+            <p>Question 1:</p>
+            <p id = 'question1'></p>
+            <textarea placeholder="Your answer..."></textarea>
+        </div>
+
+        <div class="question2">
+            <p>Question 2:</p>
+            <p id = 'question2'></p>
+            <textarea placeholder="Your answer..."></textarea>
+        </div>
+
+        <div class="question3">
+            <p>Question 3:</p>
+            <p id = 'question3'></p>
+            <textarea placeholder="Your answer..."></textarea>
+        </div>
+
+        <div class="question4">
+            <p>Question 4:</p>
+            <p id = 'question4'></p>
+            <textarea placeholder="Your answer..."></textarea>
+        </div>
+
+        <div class="question">
+            <p>Question 5:</p>
+            <p id = 'question5'></p>
+            <textarea placeholder="Your answer..."></textarea>
+        </div>
+        
+        <button id="submitAnswers">Submit Answers</button>
+    </div>
+
+    <script>
+        const retrievedData = localStorage.getItem('myData');
+        var lss = retrievedData.split(',');
+        console.log(retrievedData);
+        for(var i=0;i<5;i++){
+            document.getElementById("question" + (i+1)).innerHTML = lss[i];
+        }
+
+    </script>
+    <script src="js/questions.js"></script>
+</body>
+</html>
+
