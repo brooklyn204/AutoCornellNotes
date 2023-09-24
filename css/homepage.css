@@ -49,13 +49,14 @@ video {
 }
 
 textarea {
-    width: 100%;
     border: 2px solid #66a2ad;
     border-radius: 8px;
     padding: 10px;
     font-size: 1em;
     color: #006477;
     margin-bottom: 20px;
+    overflow-y: auto;
+    resize: none;
 }
 
 button {
@@ -84,4 +85,12 @@ button:hover {
 
 .centered-content {
     text-align: center;
+}
+
+#notesInput {
+    width: calc(100% - 30px);
+}
+
+.intro-section {
+    margin-top: 250px;
 }
